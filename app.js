@@ -238,3 +238,223 @@ clearCompletedBtn.addEventListener("click", function() {
 
 // Initialize Application
 renderTodos();
+
+
+/*
+========================================
+WEEK 5 DAILY CHALLENGES
+========================================
+*/
+
+
+// ======================================
+// DAY 1: COLOR CHANGER
+// ======================================
+
+const colorButton = document.getElementById("color-btn");
+
+function generateRandomColor() {
+
+    const randomColor = Math.floor(
+        Math.random() * 16777215
+    );
+
+    return "#" + randomColor.toString(16).padStart(6, "0");
+}
+
+colorButton.addEventListener("click", function() {
+
+    const headings = document.querySelectorAll("h1, h2, h3");
+
+    const randomColor = generateRandomColor();
+
+    headings.forEach(function(heading) {
+        heading.style.color = randomColor;
+    });
+
+});
+
+
+// ======================================
+// DAY 2: DYNAMIC ELEMENT CREATOR
+// ======================================
+
+const addParagraphBtn = document.getElementById("add-paragraph");
+
+const paragraphContainer = document.getElementById("paragraph-container");
+
+let paragraphCount = 0;
+
+addParagraphBtn.addEventListener("click", function() {
+
+    paragraphCount++;
+
+    // Create paragraph container
+    const div = document.createElement("div");
+
+    div.className = "paragraph-item";
+
+    // Create paragraph
+    const paragraph = document.createElement("p");
+
+    paragraph.textContent = `Paragraph ${paragraphCount}`;
+
+    // Create delete button
+    const deleteButton = document.createElement("button");
+
+    deleteButton.textContent = "Delete";
+
+    deleteButton.className = "delete-paragraph";
+
+    // Delete paragraph
+    deleteButton.addEventListener("click", function() {
+        div.remove();
+    });
+
+    // Add elements
+    div.append(paragraph, deleteButton);
+
+    paragraphContainer.appendChild(div);
+
+});
+
+
+// ======================================
+// DAY 3: IMAGE REMOVER
+// ======================================
+
+const removeImagesBtn = document.getElementById("remove-images");
+
+const toggleImagesBtn = document.getElementById("toggle-images");
+
+const imageContainer = document.getElementById("image-container");
+
+// Remove all images
+removeImagesBtn.addEventListener("click", function() {
+
+    const images = imageContainer.querySelectorAll("img");
+
+    images.forEach(function(image) {
+        image.remove();
+    });
+
+});
+
+// Hide and show images
+let imagesHidden = false;
+
+toggleImagesBtn.addEventListener("click", function() {
+
+    const images = imageContainer.querySelectorAll("img");
+
+    imagesHidden = !imagesHidden;
+
+    images.forEach(function(image) {
+        image.style.display = imagesHidden ? "none" : "block";
+    });
+
+    toggleImagesBtn.textContent = imagesHidden
+        ? "Show Images"
+        : "Hide Images";
+
+});
+
+
+// ======================================
+// DAY 4: CONTENT COPIER
+// ======================================
+
+const source = document.getElementById("source");
+
+const target = document.getElementById("target");
+
+const copyButton = document.getElementById("copy-btn");
+
+// Copy using button
+copyButton.addEventListener("click", function() {
+
+    target.innerHTML = source.innerHTML;
+
+});
+
+// BONUS: Drag and Drop
+
+source.addEventListener("dragstart", function(event) {
+
+    event.dataTransfer.setData("text/plain", "copy-source");
+
+});
+
+target.addEventListener("dragover", function(event) {
+
+    event.preventDefault();
+
+    target.classList.add("drag-over");
+
+});
+
+target.addEventListener("dragleave", function() {
+
+    target.classList.remove("drag-over");
+
+});
+
+target.addEventListener("drop", function(event) {
+
+    event.preventDefault();
+
+    target.classList.remove("drag-over");
+
+    const data = event.dataTransfer.getData("text/plain");
+
+    if (data === "copy-source") {
+        target.innerHTML = source.innerHTML;
+    }
+
+});
+
+
+// ======================================
+// DAY 5: DARK MODE TOGGLE
+// ======================================
+
+const darkModeButton = document.getElementById("dark-mode-btn");
+
+// Load saved preference
+let darkMode = localStorage.getItem("darkMode") === "enabled";
+
+// Apply saved preference
+function applyDarkMode() {
+
+    document.body.classList.toggle("dark-mode", darkMode);
+
+    darkModeButton.textContent = darkMode
+        ? "Disable Dark Mode"
+        : "Enable Dark Mode";
+
+}
+
+// Initialize dark mode
+applyDarkMode();
+
+// Toggle dark mode
+darkModeButton.addEventListener("click", function() {
+
+    darkMode = !darkMode;
+
+    // Save preference
+    localStorage.setItem(
+        "darkMode",
+        darkMode ? "enabled" : "disabled"
+    );
+
+    applyDarkMode();
+
+});
+
+
+/*
+========================================
+END OF WEEK 5 DAILY CHALLENGES
+========================================
+*/
